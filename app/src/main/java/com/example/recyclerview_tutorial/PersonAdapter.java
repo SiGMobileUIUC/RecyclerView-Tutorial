@@ -21,15 +21,14 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonViewHolder> {
     @NonNull
     @Override
     public PersonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new PersonViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.person_list_item, parent, false));
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.person_list_item, parent, false);
+        return new PersonViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull PersonViewHolder holder, int position) {
         Person person = personList.get(position);
-
-        holder.nameTextView.setText(person.getName());
-        holder.ageTextView.setText("Age: " + person.getAge());
+        holder.bindData(person);
     }
 
     @Override
@@ -40,13 +39,18 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonViewHolder> {
 
 class PersonViewHolder extends RecyclerView.ViewHolder {
 
-    TextView nameTextView;
-    TextView ageTextView;
+    private final TextView nameTextView;
+    private final TextView ageTextView;
 
     public PersonViewHolder(@NonNull View itemView) {
         super(itemView);
 
         nameTextView = itemView.findViewById(R.id.nameTextView);
         ageTextView = itemView.findViewById(R.id.ageTextView);
+    }
+
+    public void bindData(Person person) {
+        nameTextView.setText(person.getName());
+        ageTextView.setText("Age: " + person.getAge());
     }
 }
